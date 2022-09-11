@@ -5,21 +5,42 @@ import org.junit.Test;
 
 public class MoodAnalyserTest 
 {
-	
+
 	@Test
-	public void givenMessage_WhenSad_ShouldReturnSad()
-	{
-		MoodAnalyser  moodAnalyser = new MoodAnalyser();
-		String mood = moodAnalyser.analyseMood("This is a sad message");
-		Assert.assertEquals("SAD", mood);
+	public void shouldReturnSadMood(){
+		MoodAnalyser moodAnalyser = new MoodAnalyser("I am in Sad Mood");
+		try {
+			String result = moodAnalyser.analyseMood();
+			Assert.assertSame("SAD", result);
+		}
+		catch(MoodAnalyserException e){
+			Assert.assertEquals(MoodAnalyserException.ExceptionType.NULL,e.type);
+		}
 	}
-	
+
 	@Test
-	public void givenMessage_WhenNotSad_ShouldReturnHappy()
-	{
-		MoodAnalyser moodAnalyser = new MoodAnalyser();
-		String mood = moodAnalyser.analyseMood("This is a happy message");
-		Assert.assertEquals("HAPPY", mood);
-	}
+	public void shouldReturnHappyMood(){
+		MoodAnalyser moodAnalyser = new MoodAnalyser("I am in any Mood");
+		try {
+			String result = moodAnalyser.analyseMood();
+            Assert.assertSame("HAPPY", result);
+        }
+        catch(MoodAnalyserException e){
+            Assert.assertEquals(MoodAnalyserException.ExceptionType.NULL,e.type);
+
+        }
+    }
+    @Test
+    public void ShouldHandleNullMessage() {
+        MoodAnalyser moodAnalyser = new MoodAnalyser();
+        try {
+            String result = moodAnalyser.analyseMood();
+            Assert.assertSame("HAPPY", result);
+        }
+        catch(MoodAnalyserException e){
+            Assert.assertEquals("Message is Null",e.getMessage());
+        }
+
+    }
 
 }
